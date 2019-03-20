@@ -1,0 +1,17 @@
+.form-table {
+  max-width: 300px;
+}
+
+.form-table__top {
+  font-weight: bold;
+  text-align: center;
+}
+
+table+p.submit {
+  margin-left: 40px;
+}
+
+#toplevel_page_censorshipy-censorship .wp-menu-image img {
+  width: 20px;
+  padding: 7px 0 0;
+}
