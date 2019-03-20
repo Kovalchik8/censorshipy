@@ -4,7 +4,7 @@
   Description: Add censorship to your blog
   Author: Roman Kovalchik
   Author URI: http://www.kovalchik.com.ua/
-  Version: 1.0
+  Version: 1.1
   */
 ?>
 
@@ -15,7 +15,12 @@ class CENSOR_Plugin {
   // class constructor
   public function __construct() {
 
-    define( 'PLUGIN_DIR', dirname(__FILE__).'/' );
+    define('PLUGIN_DIR', dirname(__FILE__).'/' );
+    define('TABLE_ROWS', 3);
+    define('OPTIONS_FIELD_NAME', 'censorshipy-plugin');
+
+    // $this->fieldsCnt = 3;
+    // $this->optionsFieldName = 'censorshipy-plugin';
 
     // add styles
     add_action('admin_print_styles', array($this, 'add_my_stylesheet') );
@@ -45,13 +50,17 @@ class CENSOR_Plugin {
 
   //register our settings
   public function registerCensorshipSettings() {
-    register_setting( 'censorship-plugin-test', 'option-one-left' );
-    register_setting( 'censorship-plugin-test', 'option-one-right' );
-    register_setting( 'censorship-plugin-test', 'option-two-left' );
-    register_setting( 'censorship-plugin-test', 'option-two-right' );
-    register_setting( 'censorship-plugin-test', 'option-three-left' );
-    register_setting( 'censorship-plugin-test', 'option-three-right' );
-    register_setting( 'censorship-plugin-test', 'option-one-title' );
+
+    for ($i = 1; $i <= TABLE_ROWS; $i++) {
+
+      register_setting( OPTIONS_FIELD_NAME, 'option-left-' . $i, 'sanitize_text_field' );
+      register_setting( OPTIONS_FIELD_NAME, 'option-right-' . $i, 'sanitize_text_field' );
+      register_setting( OPTIONS_FIELD_NAME, 'title-' . $i );
+      register_setting( OPTIONS_FIELD_NAME, 'content-' . $i );
+      register_setting( OPTIONS_FIELD_NAME, 'comments-' . $i );
+
+    }
+
   }
 
   // plugin page content

@@ -1,5 +1,11 @@
 .form-table {
   max-width: 300px;
+  text-align: center;
+}
+
+.form-table td {
+  box-sizing: border-box;
+  min-width: 95px;
 }
 
 .form-table__top {
