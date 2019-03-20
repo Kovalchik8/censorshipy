@@ -44,44 +44,33 @@
 
       <?php 
 
-      for ($i = 1; $i <= TABLE_ROWS; $i++) { // loop trough all front-end fields
+      foreach($this->settings as $key=>$setting) { $key++ ?>
 
-        $changeThis = 'option-left-' . $i;
-        $toThis = 'option-right-' . $i;
-        $titileName = 'title-' . $i;
-        $contentName = 'content-' . $i;
-        $commentsName = 'comments-' . $i;
-        $titleCheckbox = checked(1, get_option('title-' . $i), false);
-        $contentCheckbox = checked(1, get_option('content-' . $i), false);
-        $commentsCheckbox = checked(1, get_option('comments-' . $i), false);
+        <tr valign="top">
+          <th scope="row"><?php echo $key ?></th>
+          <td>
+            <input class="form-table__option-left" type="text" name="<?php echo 'option-left-' . $key ?>"
+              value="<?php echo $setting['left']; ?>" />
+          </td>
+          <td>
+            <input class="form-table__option-right" type="text" name="<?php echo 'option-right-' . $key ?>"
+              value="<?php  echo $setting['right']; ?>" />
+          </td>
+          <td>
+            <input type="checkbox" name="<?php echo 'title-' . $key ?>" value='1'
+            <?php checked( 1, $setting['title'], true ); ?> />
+          </td>
+          <td>
+            <input type="checkbox" name="<?php echo 'content-' . $key ?>" value='1'
+              <?php checked( 1, $setting['content'], true ); ?> />
+          </td>
+          <td>
+            <input type="checkbox" name="<?php echo 'comments-' . $key ?>" value='1'
+            <?php checked( 1, $setting['comments'], true ); ?> />
+          </td>
+        </tr>
 
-      ?>
-
-      <tr valign="top">
-        <th scope="row"><?php echo $i ?></th>
-        <td>
-          <input type="text" name="<?php echo $changeThis ?>"
-            value="<?php echo esc_attr( get_option($changeThis) ); ?>" />
-        </td>
-        <td>
-          <input type="text" name="<?php echo $toThis ?>"
-            value="<?php echo esc_attr( get_option($toThis) ); ?>" />
-        </td>
-        <td>
-          <input type="checkbox" name="<?php echo $titileName ?>" value='1'
-            <?php echo $titleCheckbox ?> />
-        </td>
-        <td>
-          <input type="checkbox" name="<?php echo $contentName ?>" value='1'
-            <?php echo $contentCheckbox ?> />
-        </td>
-        <td>
-          <input type="checkbox" name="<?php echo $commentsName ?>" value='1'
-            <?php echo $commentsCheckbox ?> />
-        </td>
-      </tr>
-
-      <?php }  ?>
+      <?php } ?>
 
     </table>
 

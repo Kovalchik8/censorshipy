@@ -29,7 +29,7 @@ class CENSOR_Plugin {
     );
 
     // add styles
-    add_action('admin_print_styles', array($this, 'censorshipStyles') );
+    add_action('admin_print_styles', array($this, 'censorshipAssets') );
 
     // create custom plugin settings menu
     add_action('admin_menu', array($this, 'createCensorshipPlugin') );
@@ -50,8 +50,9 @@ class CENSOR_Plugin {
 
   }
 
-  public function censorshipStyles() {
-    wp_enqueue_style( 'myCSS', plugins_url( '/censor.css', __FILE__ ) );
+  public function censorshipAssets() {
+    wp_enqueue_style( 'myCSS', plugins_url( 'assets/censor.css', __FILE__ ) );
+    wp_enqueue_script( 'myJS', plugins_url( 'assets/censor.js', __FILE__ ) );
   }
 
   public function createCensorshipPlugin() {
@@ -67,13 +68,11 @@ class CENSOR_Plugin {
   public function registerCensorshipSettings() {
 
     for ($i = 1; $i <= TABLE_ROWS; $i++) {
-
       register_setting( OPTIONS_FIELD_NAME, 'option-left-' . $i, 'sanitize_text_field' );
       register_setting( OPTIONS_FIELD_NAME, 'option-right-' . $i, 'sanitize_text_field' );
       register_setting( OPTIONS_FIELD_NAME, 'title-' . $i );
       register_setting( OPTIONS_FIELD_NAME, 'content-' . $i );
       register_setting( OPTIONS_FIELD_NAME, 'comments-' . $i );
-
     }
 
   }
@@ -100,7 +99,7 @@ class CENSOR_Plugin {
 
   public function censorshipFilter($data, $type) {
     foreach($this->settings as $setting) {
-      if ($setting[$type] == 1 && $setting['left']) 
+      if ($setting[$type] == 1 && $setting['left'])
         $data = str_ireplace($setting['left'], $setting['right'], $data);
     }
     return $data;

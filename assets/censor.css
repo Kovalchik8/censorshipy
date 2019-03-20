@@ -21,3 +21,15 @@ table+p.submit {
   width: 20px;
   padding: 7px 0 0;
 }
+
+.form-table__option-left.invalid {
+  border-color: #f66c6c; 
+}
+
+.form-table__option-left.invalid:focus {
+  border-color: #f66c6c !important;
+}
+
+input[type="checkbox"].invalid {
+  border-color: #f66c6c;
+}
