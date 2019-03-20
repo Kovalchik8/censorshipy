@@ -12,19 +12,6 @@
 
   <?php } ?>
 
-  <?php
-
-    // global $new_whitelist_options;
-
-    // $option_names = $new_whitelist_options[ OPTIONS_FIELD_NAME ];
-
-    // foreach ($option_names as $option_name) {
-    //   // echo get_option($option_name).'<br>';
-    //   echo $option_name .'<br>';
-    // }
-
-  ?>
-
   <p>Easily add censorship to your blog posts and comments.</p>
   <span> Just leave right field empty in order to delete (not replace) a particular word or phrase.</span>
 
