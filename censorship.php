@@ -12,7 +12,6 @@
 
 class CENSOR_Plugin {
 
-  // class constructor
   public function __construct() {
 
     // define constants
@@ -34,7 +33,7 @@ class CENSOR_Plugin {
     // create custom plugin settings menu
     add_action('admin_menu', array($this, 'createCensorshipPlugin') );
 
-    // form setting for filtering
+    // form settings for filtering
     $this->formSettings();
 
     // filtering using wp hooks

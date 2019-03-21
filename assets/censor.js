@@ -1,55 +1,73 @@
 
 class Censorshipy {
   constructor() {
-    this.checkboxes = $('input[type=checkbox]');
-    this.inputsToCheck = $('.form-table__option-left');
     this.events();
   }
 
   events() {
-    this.checkboxes.on('click', this.validateRow );
-    this.inputsToCheck.on('keyup', this.validateRow);
-    $('.form-table__option-right').on('keyup', this.validateRow);
-    $(document).ready(this.validateForm);
+    $('input[type=checkbox]').on('click', this.validateOnEvent.bind(this) );
+    $('.form-table__option-left').on('keyup', this.validateOnEvent.bind(this));
+    $('.form-table__option-right').on('keyup', this.validateOnEvent.bind(this));
+    $(document).ready(this.validateOnLoad.bind(this));
   }
 
-  validateForm() {
-    console.log('lets validate our form');
+  // validate each row in our table
+  validateOnLoad() {
+    var rows = $('.form-table tr:not(.form-table__top)'),
+        that = this;
+
+    rows.each(function() {
+      var checkboxes = $(this).find('input[type=checkbox]'),
+          inputLeft = $(this).find('.form-table__option-left'),
+          inputRight = $(this).find('.form-table__option-right');
+      
+      that.validateTableRow(checkboxes, inputLeft, inputRight);
+    })
+
   }
 
-  validateRow(e) {
+  // validate certain row
+  validateOnEvent(e) {
     var target = $(e.target),
+      checkboxes = target.closest('tr').find('input[type="checkbox"]'),
       inputLeft = target.closest('tr').find('.form-table__option-left'),
-      inputRight = target.closest('tr').find('.form-table__option-right'),
-      rowCheckboxes = target.closest('tr').find('input[type="checkbox"]'),
-      checkInput = false;
+      inputRight = target.closest('tr').find('.form-table__option-right');
 
-      rowCheckboxes.each(function() {
-        if (this.checked)
-          checkInput = true;
-      })
-
-      if (!inputLeft.val() && checkInput) {
-        inputLeft.addClass('invalid');
-      } else {
-        inputLeft.removeClass('invalid');
-      }
-
-      if (inputLeft.val() && !checkInput) {
-        rowCheckboxes.each(function() {
-          $(this).addClass('invalid');
-        })
-      } else {
-        rowCheckboxes.each(function() {
-          $(this).removeClass('invalid');
-        })
-      }
-
-      if (inputRight.val() && !inputLeft.val()) {
-        inputLeft.addClass('invalid');
-      }
+      this.validateTableRow(checkboxes, inputLeft, inputRight);
 
   }
+
+  // validation process for a row
+  validateTableRow(checkboxes, inputLeft, inputRight) {
+    var checkInput = false;
+
+    checkboxes.each(function() {
+      if (this.checked)
+        checkInput = true;
+    })
+
+    if (!inputLeft.val() && checkInput) {
+      inputLeft.addClass('invalid');
+    } else {
+      inputLeft.removeClass('invalid');
+    }
+
+    if (inputLeft.val() && !checkInput) {
+      checkboxes.each(function() {
+        $(this).addClass('invalid');
+      })
+    } else {
+      checkboxes.each(function() {
+        $(this).removeClass('invalid');
+      })
+    }
+
+    if (inputRight.val() && !inputLeft.val()) {
+      inputLeft.addClass('invalid');
+    }
+
+  }
+
 }
 
 $(function() {
