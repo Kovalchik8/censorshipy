@@ -7,7 +7,10 @@
   if( isset($_GET['settings-updated']) ) { ?>
 
   <div id='message' class='updated'>
-    <p><strong><?php _e('Settings saved.') ?></strong></p>
+    <p>
+      <strong><?php _e('Settings saved.') ?></strong>
+      <img src="<?php echo plugins_url( '/censorshipy/images/shield.png') ?>" alt="censorshipy-shield">
+    </p>
   </div>
 
   <?php } ?>
@@ -35,29 +38,29 @@
 
       foreach($this->settings as $key=>$setting) { $key++ ?>
 
-        <tr valign="top">
-          <th scope="row"><?php echo $key ?></th>
-          <td>
-            <input class="form-table__option-left" type="text" name="<?php echo 'option-left-' . $key ?>"
-              value="<?php echo $setting['left']; ?>" />
-          </td>
-          <td>
-            <input class="form-table__option-right" type="text" name="<?php echo 'option-right-' . $key ?>"
-              value="<?php  echo $setting['right']; ?>" />
-          </td>
-          <td>
-            <input type="checkbox" name="<?php echo 'title-' . $key ?>" value='1'
+      <tr valign="top">
+        <th scope="row"><?php echo $key ?></th>
+        <td>
+          <input class="form-table__option-left" type="text" name="<?php echo 'option-left-' . $key ?>"
+            value="<?php echo $setting['left']; ?>" />
+        </td>
+        <td>
+          <input class="form-table__option-right" type="text" name="<?php echo 'option-right-' . $key ?>"
+            value="<?php  echo $setting['right']; ?>" />
+        </td>
+        <td>
+          <input type="checkbox" name="<?php echo 'title-' . $key ?>" value='1'
             <?php checked( 1, $setting['title'], true ); ?> />
-          </td>
-          <td>
-            <input type="checkbox" name="<?php echo 'content-' . $key ?>" value='1'
-              <?php checked( 1, $setting['content'], true ); ?> />
-          </td>
-          <td>
-            <input type="checkbox" name="<?php echo 'comments-' . $key ?>" value='1'
+        </td>
+        <td>
+          <input type="checkbox" name="<?php echo 'content-' . $key ?>" value='1'
+            <?php checked( 1, $setting['content'], true ); ?> />
+        </td>
+        <td>
+          <input type="checkbox" name="<?php echo 'comments-' . $key ?>" value='1'
             <?php checked( 1, $setting['comments'], true ); ?> />
-          </td>
-        </tr>
+        </td>
+      </tr>
 
       <?php } ?>
 

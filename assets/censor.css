@@ -2,6 +2,16 @@
   margin-top: 30px;
 }
 
+.updated p {
+  display: flex;
+  align-items: center;
+}
+
+.updated p img {
+  margin-left: 5px;
+  width: 25px;
+}
+
 .desc {
   display: flex;
   flex-direction: column;
