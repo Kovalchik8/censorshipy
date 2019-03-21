@@ -12,10 +12,12 @@
 
   <?php } ?>
 
-  <p>Easily add censorship to your blog posts and comments.</p>
-  <span> Just leave right field empty in order to delete (not replace) a particular word or phrase.</span>
+  <div class="desc">
+    <span>Easily add censorship to your blog posts and comments.</span>
+    <span>Just leave right field empty in order to delete (not replace) a particular word or phrase.</span>
+  </div>
 
-  <form method="post" action="options.php">
+  <form id="CensorshipyForm" method="post" action="options.php">
     <?php settings_fields( OPTIONS_FIELD_NAME ); ?>
 
     <table class="form-table">

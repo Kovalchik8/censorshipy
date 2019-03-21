@@ -1,5 +1,18 @@
+#CensorshipyForm {
+  margin-top: 30px;
+}
+
+.desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.desc span {
+  margin: 5px 0;
+}
+
 .form-table {
-  max-width: 300px;
+  width: 700px;;
   text-align: center;
 }
 
@@ -32,4 +45,14 @@ table+p.submit {
 
 input[type="checkbox"].invalid {
   border-color: #f66c6c;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 782px) {
+  .form-table td, .form-table th {
+    display: table-cell;
+  }
+  #CensorshipyForm {
+    overflow-x: scroll;
+  }
 }
