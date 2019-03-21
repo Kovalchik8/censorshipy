@@ -21,11 +21,6 @@ class CENSOR_Plugin {
 
     // variables
     $this->settings = array();
-    $this->filterTypes = array(
-      'content' => 'content',
-      'title' => 'title',
-      'comments' => 'comments'
-    );
 
     // add styles
     add_action('admin_print_styles', array($this, 'censorshipAssets') );
@@ -38,13 +33,13 @@ class CENSOR_Plugin {
 
     // filtering using wp hooks
     add_filter( 'the_content', function($data) {
-      return $this->censorshipFilter($data, $this->filterTypes['content']);
+      return $this->censorshipFilter($data, 'content');
     } );
     add_filter( 'the_title', function($data) {
-      return $this->censorshipFilter($data, $this->filterTypes['title']);
+      return $this->censorshipFilter($data, 'title');
     } );
     add_filter( 'comment_text', function($data) {
-      return $this->censorshipFilter($data, $this->filterTypes['comments']);
+      return $this->censorshipFilter($data, 'comments');
     } );
 
   }
