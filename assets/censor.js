@@ -37,7 +37,7 @@ class Censorshipy {
 
   }
 
-  // validation process for a row
+  // validation for a row
   validateTableRow(checkboxes, inputLeft, inputRight) {
     var checkInput = false;
 
