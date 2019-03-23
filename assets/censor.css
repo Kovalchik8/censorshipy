@@ -1,3 +1,4 @@
+
 #CensorshipyForm {
   margin-top: 30px;
 }
@@ -23,6 +24,10 @@
 
 .form-table {
   width: 700px;;
+  text-align: center;
+}
+
+.form-table th {
   text-align: center;
 }
 
@@ -55,6 +60,36 @@ table+p.submit {
 
 input[type="checkbox"].invalid {
   border-color: #f66c6c;
+} 
+
+.form-table__add {
+  width: 700px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-table__add.hidden {
+  display: none;
+}
+
+.form-table__add span {
+  width: auto;
+  height: auto;
+  color: #0085ba;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.form-table__delete {
+  min-width: 40px !important;
+}
+
+.form-table__delete {
+  color: #e62929;
+  cursor: pointer;
 }
 
 /* RESPONSIVE */

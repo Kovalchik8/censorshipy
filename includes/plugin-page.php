@@ -6,12 +6,12 @@
   // message after settings were updated
   if( isset($_GET['settings-updated']) ) { ?>
 
-  <div id='message' class='updated'>
-    <p>
-      <strong><?php _e('Settings saved.') ?></strong>
-      <img src="<?php echo plugins_url( '/censorshipy/images/shield.png') ?>" alt="censorshipy-shield">
-    </p>
-  </div>
+    <div id='message' class='updated'>
+      <p>
+        <strong><?php _e('Settings saved.') ?></strong>
+        <img src="<?php echo plugins_url( '/censorshipy/images/shield.png') ?>" alt="censorshipy-shield">
+      </p>
+    </div>
 
   <?php } ?>
 
@@ -25,13 +25,15 @@
 
     <table class="form-table">
 
+      <input class="form-table__rows-cnt" type="hidden" name="censorshipy-rows" value="5" >
+
       <tr class='form-table__top' valign="top">
-        <th scope="row">№</th>
-        <td>Change this</td>
-        <td>To this</td>
-        <td>Title</td>
-        <td>Content</td>
-        <td>Comments</td>
+        <th class="form-table__number" scope="row">№</th>
+        <th>Change this</th>
+        <th>To this</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Comments</th>
       </tr>
 
       <?php 
@@ -60,11 +62,18 @@
           <input type="checkbox" name="<?php echo 'comments-' . $key ?>" value='1'
             <?php checked( 1, $setting['comments'], true ); ?> />
         </td>
+        <?php if ($key > MIN_TABLE_ROWS) { ?>
+          <td class="form-table__delete"> <span title="delete row" class="dashicons dashicons-minus"></span> </td>
+        <?php } ?>
       </tr>
 
       <?php } ?>
 
     </table>
+
+    <div class="form-table__add <?php if (count($this->settings) >= MAX_TABLE_ROWS - 1) echo 'hidden' ?>">
+      <span class="dashicons dashicons-plus"></span>
+    </div>
 
     <?php submit_button(); ?>
 

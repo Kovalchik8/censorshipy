@@ -15,14 +15,22 @@ class CENSOR_Plugin {
   public function __construct() {
 
     // define constants
-    define('PLUGIN_DIR', dirname(__FILE__).'/' );
-    define('TABLE_ROWS', 3);
+    define('MAX_TABLE_ROWS', 6); // including table header
+    define('MIN_TABLE_ROWS', 3); // don't including table header
+
+    $tableRows = get_option('censorshipy-rows', MIN_TABLE_ROWS);
+
+    if ($tableRows >= MAX_TABLE_ROWS || $tableRows < MIN_TABLE_ROWS) 
+      $tableRows = MIN_TABLE_ROWS;
+
+    define('TABLE_ROWS', $tableRows);
+    define('PLUGIN_DIR', dirname(__FILE__) . '/' );
     define('OPTIONS_FIELD_NAME', 'censorshipy-plugin');
 
     // variables
     $this->settings = array();
 
-    // add styles
+    // add assets
     add_action('admin_print_styles', array($this, 'censorshipAssets') );
 
     // create custom plugin settings menu
@@ -47,6 +55,9 @@ class CENSOR_Plugin {
   public function censorshipAssets() {
     wp_enqueue_style( 'myCSS', plugins_url( 'assets/censor.css', __FILE__ ) );
     wp_enqueue_script( 'myJS', plugins_url( 'assets/censor.js', __FILE__ ) );
+    wp_enqueue_script( 'ajaxJS', plugins_url( 'assets/ajax.js', __FILE__ ) );
+    wp_localize_script( 'ajaxJS', 'ajax_object',
+      array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'max_table_rows' => MAX_TABLE_ROWS ) );
   }
 
   public function createCensorshipPlugin() {
@@ -60,6 +71,8 @@ class CENSOR_Plugin {
 
   //register our settings
   public function registerCensorshipSettings() {
+
+    register_setting( OPTIONS_FIELD_NAME, 'censorshipy-rows', 'sanitize_text_field' );
 
     for ($i = 1; $i <= TABLE_ROWS; $i++) {
       register_setting( OPTIONS_FIELD_NAME, 'option-left-' . $i, 'sanitize_text_field' );

@@ -1,14 +1,77 @@
 
 class Censorshipy {
+
   constructor() {
-    this.events();
+    this.inputTableRows = $('.form-table__rows-cnt');
+    this.addRowBtn = $('.form-table__add');
+    this.addRowBtn.on('click', this.addRowBtnOnClick.bind(this))
+    this.tableBody = $('.form-table tbody');
+    this.validationEvents();
   }
 
-  events() {
+  validationEvents() {
     $('input[type=checkbox]').on('click', this.validateOnEvent.bind(this) );
     $('.form-table__option-left').on('keyup', this.validateOnEvent.bind(this));
     $('.form-table__option-right').on('keyup', this.validateOnEvent.bind(this));
+    $('.form-table__delete').on('click', this.deleteRow.bind(this));
     $(document).ready(this.validateOnLoad.bind(this));
+  }
+
+  setTableRows() {
+    var rows = $('.form-table tr');
+    this.inputTableRows.val(rows.length - 1); // exclude table headers row
+  }
+
+  deleteRow(e) {
+    var row = $(e.target).closest('tr');
+    row.remove();
+    
+    this.addRowBtn.removeClass('hidden');
+    this.setTableRows();
+
+  }
+
+  addRowBtnOnClick() {
+    var tableRows = $('.form-table tr');
+
+    if (tableRows.length < ajax_object.max_table_rows ) {
+      var i = tableRows.length;
+      this.tableBody.append(`
+      
+      <tr valign="top">
+        <th scope="row">${i}</th>
+        <td>
+          <input class="form-table__option-left" type="text" name="option-left-${i}"
+          />
+        </td>
+        <td>
+          <input class="form-table__option-right" type="text" name="option-right-${i}"
+          />
+        </td>
+        <td>
+          <input type="checkbox" name="title-${i}" value='1'
+          />
+        </td>
+        <td>
+          <input type="checkbox" name="content-${i}" value='1'
+            />
+        </td>
+        <td>
+          <input type="checkbox" name="content-${i}" value='1'
+            />
+        </td>
+        <td class="form-table__delete"> <span title="delete row" class="dashicons dashicons-minus"></span> </td>
+      </tr>
+      `)
+
+      this.validationEvents(); // include new row to events
+      this.setTableRows();
+
+      if ( tableRows.length + 1  == ajax_object.max_table_rows) 
+        this.addRowBtn.addClass('hidden');
+
+    }
+
   }
 
   // validate each row in our table
