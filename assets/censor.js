@@ -6,28 +6,52 @@ class Censorshipy {
     this.addRowBtn = $('.form-table__add');
     this.addRowBtn.on('click', this.addRowBtnOnClick.bind(this))
     this.tableBody = $('.form-table tbody');
+    this.deleteRowTrigger();
     this.validationEvents();
+  }
+
+  // events
+  deleteRowTrigger() {
+    $('.form-table__delete').on('click', this.deleteRow.bind(this));
   }
 
   validationEvents() {
     $('input[type=checkbox]').on('click', this.validateOnEvent.bind(this) );
     $('.form-table__option-left').on('keyup', this.validateOnEvent.bind(this));
     $('.form-table__option-right').on('keyup', this.validateOnEvent.bind(this));
-    $('.form-table__delete').on('click', this.deleteRow.bind(this));
     $(document).ready(this.validateOnLoad.bind(this));
   }
 
+
+  // methods
   setTableRows() {
     var rows = $('.form-table tr');
     this.inputTableRows.val(rows.length - 1); // exclude table headers row
   }
 
   deleteRow(e) {
-    var row = $(e.target).closest('tr');
-    row.remove();
-    
-    this.addRowBtn.removeClass('hidden');
+    var currentRow = $(e.target).closest('tr'),
+        nextRow = currentRow.next();
+        
+    if (nextRow.length) { // clone options from following row
+      var currentRowNum = currentRow.find('.form-table__number').text(),
+          nextRowCheckboxes = nextRow.find('input[type=checkbox]'),
+          checkboxesNames = ['title-', 'content-', 'comments-'];
+
+      nextRow.find('.form-table__number').text(currentRowNum);
+      nextRow.find('.form-table__option-left').attr('name', 'option-left-' + currentRowNum);
+      nextRow.find('.form-table__option-right').attr('name', 'option-right-' + currentRowNum);
+
+      nextRowCheckboxes.each(function(index) {
+        $(this).attr('name', checkboxesNames[index] + currentRowNum)
+      });
+
+      this.deleteRowTrigger(); // allow to delete this row
+    }
+        
+    currentRow.remove();
     this.setTableRows();
+    this.addRowBtn.removeClass('hidden');
 
   }
 
@@ -39,7 +63,7 @@ class Censorshipy {
       this.tableBody.append(`
       
       <tr valign="top">
-        <th scope="row">${i}</th>
+        <th class="form-table__number" scope="row">${i}</th>
         <td>
           <input class="form-table__option-left" type="text" name="option-left-${i}"
           />
@@ -64,8 +88,9 @@ class Censorshipy {
       </tr>
       `)
 
-      this.validationEvents(); // include new row to events
-      this.setTableRows();
+      this.validationEvents(); // allow to validate fresh row
+      this.deleteRowTrigger(); // allow to delete this row
+      this.setTableRows(); // set current rows count
 
       if ( tableRows.length + 1  == ajax_object.max_table_rows) 
         this.addRowBtn.addClass('hidden');

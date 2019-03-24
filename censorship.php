@@ -15,8 +15,8 @@ class CENSOR_Plugin {
   public function __construct() {
 
     // define constants
-    define('MAX_TABLE_ROWS', 6); // including table header
-    define('MIN_TABLE_ROWS', 3); // don't including table header
+    define('MAX_TABLE_ROWS', 6); // including table header row
+    define('MIN_TABLE_ROWS', 3); // without table header row
 
     $tableRows = get_option('censorshipy-rows', MIN_TABLE_ROWS);
 
@@ -74,7 +74,7 @@ class CENSOR_Plugin {
 
     register_setting( OPTIONS_FIELD_NAME, 'censorshipy-rows', 'sanitize_text_field' );
 
-    for ($i = 1; $i <= TABLE_ROWS; $i++) {
+    for ($i = 1; $i <= MAX_TABLE_ROWS; $i++) {
       register_setting( OPTIONS_FIELD_NAME, 'option-left-' . $i, 'sanitize_text_field' );
       register_setting( OPTIONS_FIELD_NAME, 'option-right-' . $i, 'sanitize_text_field' );
       register_setting( OPTIONS_FIELD_NAME, 'title-' . $i );

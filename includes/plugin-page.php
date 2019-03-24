@@ -25,10 +25,10 @@
 
     <table class="form-table">
 
-      <input class="form-table__rows-cnt" type="hidden" name="censorshipy-rows" value="5" >
+      <input class="form-table__rows-cnt" type="hidden" name="censorshipy-rows" value="<?php echo TABLE_ROWS ?>" >
 
       <tr class='form-table__top' valign="top">
-        <th class="form-table__number" scope="row">№</th>
+        <th  scope="row">№</th>
         <th>Change this</th>
         <th>To this</th>
         <th>Title</th>
@@ -41,7 +41,7 @@
       foreach($this->settings as $key=>$setting) { $key++ ?>
 
       <tr valign="top">
-        <th scope="row"><?php echo $key ?></th>
+        <th class="form-table__number" scope="row"><?php echo $key ?></th>
         <td>
           <input class="form-table__option-left" type="text" name="<?php echo 'option-left-' . $key ?>"
             value="<?php echo $setting['left']; ?>" />
