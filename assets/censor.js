@@ -17,8 +17,7 @@ class Censorshipy {
 
   validationEvents() {
     $('input[type=checkbox]').on('click', this.validateOnEvent.bind(this) );
-    $('.form-table__option-left').on('keyup', this.validateOnEvent.bind(this));
-    $('.form-table__option-right').on('keyup', this.validateOnEvent.bind(this));
+    $('.form-table__option-left, .form-table__option-right').on('keyup', this.validateOnEvent.bind(this));
     $(document).ready(this.validateOnLoad.bind(this));
   }
 
@@ -64,24 +63,19 @@ class Censorshipy {
       <tr valign="top">
         <th class="form-table__number" scope="row">${i}</th>
         <td>
-          <input class="form-table__option-left" type="text" name="option-left-${i}"
-          />
+          <input class="form-table__option-left" type="text" name="option-left-${i}" />
         </td>
         <td>
-          <input class="form-table__option-right" type="text" name="option-right-${i}"
-          />
+          <input class="form-table__option-right" type="text" name="option-right-${i}" />
         </td>
         <td>
-          <input type="checkbox" name="title-${i}" value='1'
-          />
+          <input type="checkbox" name="title-${i}" value='1' />
         </td>
         <td>
-          <input type="checkbox" name="content-${i}" value='1'
-            />
+          <input type="checkbox" name="content-${i}" value='1' />
         </td>
         <td>
-          <input type="checkbox" name="content-${i}" value='1'
-            />
+          <input type="checkbox" name="content-${i}" value='1' />
         </td>
         <td class="form-table__delete"> <span title="delete row" class="dashicons dashicons-minus"></span> </td>
       </tr>
