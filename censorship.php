@@ -15,7 +15,7 @@ class CENSOR_Plugin {
   public function __construct() {
 
     // define constants
-    define('MAX_TABLE_ROWS', 6); // including table header row
+    define('MAX_TABLE_ROWS', 11); // including table header row
     define('MIN_TABLE_ROWS', 3); // without table header row
 
     $tableRows = get_option('censorshipy-rows', MIN_TABLE_ROWS);
@@ -55,8 +55,7 @@ class CENSOR_Plugin {
   public function censorshipAssets() {
     wp_enqueue_style( 'myCSS', plugins_url( 'assets/censor.css', __FILE__ ) );
     wp_enqueue_script( 'myJS', plugins_url( 'assets/censor.js', __FILE__ ) );
-    wp_enqueue_script( 'ajaxJS', plugins_url( 'assets/ajax.js', __FILE__ ) );
-    wp_localize_script( 'ajaxJS', 'ajax_object',
+    wp_localize_script( 'myJS', 'ajax_object',
       array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'max_table_rows' => MAX_TABLE_ROWS ) );
   }
 

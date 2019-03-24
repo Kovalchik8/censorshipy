@@ -22,34 +22,33 @@ class Censorshipy {
     $(document).ready(this.validateOnLoad.bind(this));
   }
 
-
   // methods
   setTableRows() {
-    var rows = $('.form-table tr');
-    this.inputTableRows.val(rows.length - 1); // exclude table headers row
+    var rows = $('.form-table tr:not(.form-table__top)'); // exclude table headers row
+    this.inputTableRows.val(rows.length); 
   }
 
   deleteRow(e) {
-    var currentRow = $(e.target).closest('tr'),
-        nextRow = currentRow.next();
-        
-    if (nextRow.length) { // clone options from following row
-      var currentRowNum = currentRow.find('.form-table__number').text(),
-          nextRowCheckboxes = nextRow.find('input[type=checkbox]'),
-          checkboxesNames = ['title-', 'content-', 'comments-'];
-
-      nextRow.find('.form-table__number').text(currentRowNum);
-      nextRow.find('.form-table__option-left').attr('name', 'option-left-' + currentRowNum);
-      nextRow.find('.form-table__option-right').attr('name', 'option-right-' + currentRowNum);
-
-      nextRowCheckboxes.each(function(index) {
-        $(this).attr('name', checkboxesNames[index] + currentRowNum)
-      });
-
-      this.deleteRowTrigger(); // allow to delete this row
-    }
-        
+    var currentRow = $(e.target).closest('tr');
     currentRow.remove();
+
+    // resign all rows options
+    var raws = $('.form-table tr:not(.form-table__top)');
+    raws.each(function(index) {
+      index++;
+      $(this).find('.form-table__number').text(index);
+      $(this).find('.form-table__option-left').attr('name', 'option-left-' + index);
+      $(this).find('.form-table__option-right').attr('name', 'option-right-' + index);
+      
+      var checkboxes = $(this).find('input[type=checkbox]'),
+          checkboxesOptions = ['title-', 'content-', 'comments-'];
+      
+      checkboxes.each(function(i) {
+        $(this).attr('name', checkboxesOptions[i] + index)
+      })
+
+    })
+
     this.setTableRows();
     this.addRowBtn.removeClass('hidden');
 
@@ -88,13 +87,12 @@ class Censorshipy {
       </tr>
       `)
 
-      this.validationEvents(); // allow to validate fresh row
+      this.validationEvents(); // allow to validate this row
       this.deleteRowTrigger(); // allow to delete this row
-      this.setTableRows(); // set current rows count
+      this.setTableRows();
 
       if ( tableRows.length + 1  == ajax_object.max_table_rows) 
         this.addRowBtn.addClass('hidden');
-
     }
 
   }
