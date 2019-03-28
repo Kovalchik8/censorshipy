@@ -4,8 +4,8 @@ class Censorshipy {
   constructor() {
     this.inputTableRows = $('.form-table__rows-cnt');
     this.addRowBtn = $('.form-table__add');
-    this.addRowBtn.on('click', this.addRowBtnOnClick.bind(this))
     this.tableBody = $('.form-table tbody');
+    this.addRowBtn.on('click', this.addRowBtnOnClick.bind(this))
     this.deleteRowTrigger();
     this.validationEvents();
   }
@@ -28,7 +28,10 @@ class Censorshipy {
   }
 
   deleteRow(e) {
-    var currentRow = $(e.target).closest('tr');
+    var currentRow = $(e.target).closest('tr'),
+        checkboxesOptions = ['title-', 'content-', 'comments-'],
+        checkboxes;
+        
     currentRow.remove();
 
     // resign all rows options
@@ -39,8 +42,7 @@ class Censorshipy {
       $(this).find('.form-table__option-left').attr('name', 'option-left-' + index);
       $(this).find('.form-table__option-right').attr('name', 'option-right-' + index);
       
-      var checkboxes = $(this).find('input[type=checkbox]'),
-          checkboxesOptions = ['title-', 'content-', 'comments-'];
+      checkboxes = $(this).find('input[type=checkbox]');
       
       checkboxes.each(function(i) {
         $(this).attr('name', checkboxesOptions[i] + index)
@@ -58,6 +60,7 @@ class Censorshipy {
 
     if (tableRows.length < ajax_object.max_table_rows ) {
       var i = tableRows.length;
+
       this.tableBody.append(`
       
       <tr valign="top">

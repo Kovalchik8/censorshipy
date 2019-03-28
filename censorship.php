@@ -36,8 +36,8 @@ class CENSOR_Plugin {
     // create custom plugin settings menu
     add_action('admin_menu', array($this, 'createCensorshipPlugin') );
 
-    // form settings for filtering
-    $this->formSettings();
+    // get settings for filtering
+    $this->getSettings();
 
     // filtering using wp hooks
     add_filter( 'the_content', function($data) {
@@ -87,7 +87,7 @@ class CENSOR_Plugin {
   public function censorshipSettingsPage() { include_once (PLUGIN_DIR . 'includes/plugin-page.php'); }
 
   // fill the array with settings from the database
-  public function formSettings() {
+  public function getSettings() {
 
     for ($i = 1; $i <= TABLE_ROWS; $i++) {
 
