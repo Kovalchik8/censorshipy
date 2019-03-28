@@ -55,8 +55,9 @@ class CENSOR_Plugin {
   public function censorshipAssets() {
     wp_enqueue_style( 'myCSS', plugins_url( 'assets/censor.css', __FILE__ ) );
     wp_enqueue_script( 'myJS', plugins_url( 'assets/censor.js', __FILE__ ) );
-    wp_localize_script( 'myJS', 'ajax_object',
-      array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'max_table_rows' => MAX_TABLE_ROWS ) );
+    wp_localize_script( 'myJS', 'CensorshipyData',
+      array( 'max_table_rows' => MAX_TABLE_ROWS ) 
+    );
   }
 
   public function createCensorshipPlugin() {
