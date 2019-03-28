@@ -116,7 +116,7 @@ class Censorshipy {
 
   }
 
-  // validate certain row
+  // validate certain row on event
   validateOnEvent(e) {
     var target = $(e.target);
     this.validateTableRow(target.closest('tr'));
