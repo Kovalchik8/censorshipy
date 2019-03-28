@@ -105,39 +105,35 @@ class Censorshipy {
 
   }
 
-  // validate each row in our table
+  // validate each row in our table on document load
   validateOnLoad() {
     var rows = $('.form-table tr:not(.form-table__top)'),
         that = this;
 
     rows.each(function() {
-      var checkboxes = $(this).find('input[type=checkbox]'),
-          inputLeft = $(this).find('.form-table__option-left'),
-          inputRight = $(this).find('.form-table__option-right');
-      
-      that.validateTableRow(checkboxes, inputLeft, inputRight);
+      that.validateTableRow($(this));
     })
 
   }
 
   // validate certain row
   validateOnEvent(e) {
-    var target = $(e.target),
-      checkboxes = target.closest('tr').find('input[type="checkbox"]'),
-      inputLeft = target.closest('tr').find('.form-table__option-left'),
-      inputRight = target.closest('tr').find('.form-table__option-right');
-
-      this.validateTableRow(checkboxes, inputLeft, inputRight);
-
+    var target = $(e.target);
+    this.validateTableRow(target.closest('tr'));
   }
 
   // validation for a row
-  validateTableRow(checkboxes, inputLeft, inputRight) {
-    var checkInput = false;
+  validateTableRow(row) {
+    var checkboxes = row.find('input[type=checkbox]'),
+        inputLeft = row.find('.form-table__option-left'),
+        inputRight = row.find('.form-table__option-right'),
+        checkInput = false;
 
     checkboxes.each(function() {
-      if (this.checked)
+      if (this.checked) {
         checkInput = true;
+        return false; // break from the loop
+      }
     })
 
     if (!inputLeft.val() && checkInput) {
