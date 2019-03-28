@@ -5,20 +5,16 @@ class Censorshipy {
     this.inputTableRows = $('.form-table__rows-cnt');
     this.addRowBtn = $('.form-table__add');
     this.tableBody = $('.form-table tbody');
-    this.addRowBtn.on('click', this.addRowBtnOnClick.bind(this))
-    this.deleteRowTrigger();
-    this.validationEvents();
+    this.events();
   }
 
   // events
-  deleteRowTrigger() {
-    $('.form-table__delete').on('click', this.deleteRow.bind(this));
-  }
-
-  validationEvents() {
-    $('input[type=checkbox]').on('click', this.validateOnEvent.bind(this) );
-    $('.form-table__option-left, .form-table__option-right').on('keyup', this.validateOnEvent.bind(this));
+  events() {
     $(document).ready(this.validateOnLoad.bind(this));
+    this.addRowBtn.on('click', this.addRowBtnOnClick.bind(this))
+    $('.form-table__option-left, .form-table__option-right').on('keyup', this.validateOnEvent.bind(this));
+    $('input[type=checkbox]').on('click', this.validateOnEvent.bind(this) );
+    $('.form-table__delete').on('click', this.deleteRow.bind(this));
   }
 
   // methods
@@ -56,9 +52,14 @@ class Censorshipy {
   }
 
   addRowBtnOnClick() {
-    var tableRows = $('.form-table tr');
+    var tableRows = $('.form-table tr'),
+        newRow,
+        optionLeft,
+        optionRight,
+        checkboxes,
+        deleteRowBtn;
 
-    if (tableRows.length < ajax_object.max_table_rows ) {
+    if (tableRows.length < CensorshipyData.max_table_rows ) {
       var i = tableRows.length;
 
       this.tableBody.append(`
@@ -82,13 +83,23 @@ class Censorshipy {
         </td>
         <td class="form-table__delete"> <span title="delete row" class="dashicons dashicons-minus"></span> </td>
       </tr>
-      `)
+      `);
 
-      this.validationEvents(); // allow to validate this row
-      this.deleteRowTrigger(); // allow to delete this row
+      newRow = $(`.form-table tr:nth-child(${++i})`);
+
+      // allow to validate and delete new row
+      optionLeft = newRow.find('.form-table__option-left');
+      optionRight = newRow.find('.form-table__option-right');
+      checkboxes = newRow.find('input[type=checkbox]');
+      deleteRowBtn = newRow.find('.form-table__delete');
+      
+      optionLeft.add(optionRight).on('keyup', this.validateOnEvent.bind(this)); 
+      checkboxes.on('click', this.validateOnEvent.bind(this)); 
+      deleteRowBtn.on('click', this.deleteRow.bind(this));
+      
       this.setTableRows();
 
-      if ( tableRows.length + 1  == ajax_object.max_table_rows) 
+      if ( i >= CensorshipyData.max_table_rows)
         this.addRowBtn.addClass('hidden');
     }
 
